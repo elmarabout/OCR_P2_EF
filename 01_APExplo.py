@@ -41,7 +41,7 @@ print("Les doublons sont ", show_duplicate())
 def show_msno():
     for elt in list_df:
         print(elt.isna().sum())
-        msno.matrix(elt)
+        msno.bar(elt)
         plt.show()
 
 def df_withoutna():
@@ -56,20 +56,59 @@ def df_withoutna():
 # c'est nul comme méthode brut, il ne reste plus rien dans les dataframes
 
 ## Je souhaite nettoyer les dataframes des colonnes parcimonieuses
-
+list_dfkilled=[]
 def killemptiness():
-    list_dfkilled=[]
     for elt in list_df:
         pct_na = elt.isna().sum() / len(elt)
-        missing_feature = pct_na[pct_na > 0.7].index
+        missing_feature = pct_na[pct_na > 0.98].index
         elt.drop(missing_feature, axis =1, inplace=True)
-        elt.dropna(inplace=True)
+        #elt.dropna(inplace=True)
         list_dfkilled.append(elt)
     print("après un nettoyage à 80% on a ",list_dfkilled[0].shape, list_dfkilled[1].shape, list_dfkilled[2].shape, list_dfkilled[3].shape,list_dfkilled[4].shape)
     return list_dfkilled
 
-DESCS = killemptiness()[0]
-DESC = killemptiness()[1]
-DESD = killemptiness()[2]
-DESFN = killemptiness()[3]
-DESS = killemptiness()[4]
+def export_dfcleaned():
+    dfkilled = killemptiness()
+    DESCS = dfkilled[0]
+    DESC = dfkilled[1]
+    DESD = dfkilled[2]
+    DESFN = dfkilled[3]
+    DESS = dfkilled[4]
+    return DESCS,DESC, DESD, DESFN, DESS
+
+DESCS,DESC, DESD, DESFN, DESS = export_dfcleaned()
+
+def replace_namecdf(df1, col_name, name_before, name_after):
+    df1[df1[col_name] == name_before, col_name] = name_after
+    print(df1[col_name])
+    return None
+
+
+def rename_coldf(df1, col_before, col_after):
+    if col_before in df1.columns:
+        df1.rename(columns={col_before: col_after}, inplace=True)
+        print("after action renaming",df1[col_after])
+        return None
+    else:
+        return "not is the df"
+
+def delete_devantrelou(df1, col, lstrip_carac):
+    df1[col] = df1[col].map(lambda x: x.lstrip(lstrip_carac))
+    return None
+
+####### on harmonise les noms de colonnes
+
+rename_coldf(DESC,'Table Name','Country Name')
+
+rename_coldf(DESCS,'CountryCode','Country Code')
+rename_coldf(DESCS,'SeriesCode','Indicator Code')
+rename_coldf(DESCS,'DESCRIPTION','Desc Data')
+
+rename_coldf(DESFN,'CountryCode','Country Code')
+rename_coldf(DESFN,'SeriesCode','Indicator Code')
+rename_coldf(DESFN,'DESCRIPTION','Desc Data')
+
+rename_coldf(DESS,'SeriesCode','Indicator Code')
+
+#### drop duplicate
+
