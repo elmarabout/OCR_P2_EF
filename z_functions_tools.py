@@ -93,3 +93,14 @@ def diff(li1, li2):
     print(len(diffs), "differences between the two columns")
     print("Here are the differences \n", diffs)
     return (set(li1) - set(li2)), (set(li2) - set(li1))
+
+def lets_barplot(df, col):
+    import matplotlib.pyplot as plt
+    import seaborn as sns
+    data = df[col].value_counts()
+    graph = sns.barplot(x = data.values, y = data.index)
+    labels = [item.get_text() for item in graph.get_yticklabels()]
+    graph.set_yticklabels(labels, fontsize= 10)
+    plt.xlabel('Number', fontsize = 9)
+    plt.show
+    return None

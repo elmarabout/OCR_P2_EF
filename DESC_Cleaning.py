@@ -4,22 +4,33 @@ from AnaExplo import export_dfcleaned
 
 DESCS,DESC, DESD, DESFN, DESS = export_dfcleaned()
 
-#print(len(set(DESFN['CountryCode'])))
 
-## 239 country code sur DESCFN
+DESC = pd.read_csv("data/DESC2.csv")
+DESD = pd.read_csv("data/DESD2.csv")
+DESFN = pd.read_csv('data/DESFN2.csv')
+DESCS = pd.read_csv('data/DESCS2.csv')
 
-def diff(a,b):
-    return list(list(set(a)-set(b))+ list(set(b) - set(a)))
+# print(DESC.columns)
+# Index(['Unnamed: 0', 'Country Code', 'Short Name', 'Country Name', 'Long Name',
+#        '2-alpha code', 'Currency Unit', 'Special Notes', 'Region',
+#        'Income Group', 'WB-2 code', 'National accounts base year',
+#        'National accounts reference year', 'SNA price valuation',
+#        'Lending category', 'Other groups', 'System of National Accounts',
+#        'Alternative conversion factor', 'PPP survey year',
+#        'Balance of Payments Manual in use', 'External debt Reporting status',
+#        'System of trade', 'Government Accounting concept',
+#        'IMF data dissemination standard', 'Latest population census',
+#        'Latest household survey',
+#        'Source of most recent Income and expenditure data',
+#        'Vital registration complete', 'Latest agricultural census',
+#        'Latest industrial data', 'Latest trade data',
+#        'Latest water withdrawal data'],
+#       dtype='object')
 
-a_desc = set(list(DESC['Country Code'].unique()))
-b_desfn = set(list(DESFN['CountryCode'].unique()))
+region_count = DESC['Region'].value_counts()
 
-#CountryCode_diff = a_desc - b_desfn
-#print(CountryCode_diff)
-# {'GRL', 'MAF', 'SXM'}
+DESC_na = DESC[DESC.isna().any(axis=1)]
+DESC_wna = (DESC_na[DESC_na['Region'].isna()])
 
-### colonne Year
-
-if DESFN['Year'].str.contains('YR').any():
-    DESFN['Year'] = DESFN['Year'].apply(lambda x: x[2:])
+DESC.drop(index=DESC_wna.index, inplace=True)
 

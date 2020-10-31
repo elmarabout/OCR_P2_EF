@@ -19,14 +19,5 @@ def delete_devantrelou(df1, col, lstrip_carac):
     df1[col] = df1[col].map(lambda x:x.lstrip(lstrip_carac))
     return None
 
-def lets_barplot(df, col):
-    import matplotlib.pyplot as plt
-    import seaborn as sns
-    data = df[col].value_counts()
-    graph = sns.barplot(x = data.values, y = data.index)
-    labels = [item.get_text() for item in graph.get_yticklabels()]
-    graph.set_yticklabels(labels, fontsize= 10)
-    plt.xlabel('Number', fontsize = 9)
-    plt.show
-    return None
+
 

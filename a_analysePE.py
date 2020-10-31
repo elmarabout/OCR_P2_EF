@@ -61,10 +61,20 @@ print("DESCS2 :\n",DESCS2.columns,"DESC2 :\n",DESC2.columns,
 # print(set(DESCS2['Country Code'].tolist()))
 # print(set(DESD2['Country Code'].tolist()))
 
+print(len(DESC2['Country Code'].unique()))
+print(len(DESD2['Country Code'].unique()))
+print(len(DESCS2['Country Code'].unique()))
+print(len(DESFN2['Country Code'].unique()))
+##241
+##242
+##211
+##239
+#La dataframe avec contenant le plus de country code est DESD, nous allons donc l'utiliser pour harmoniser les Country Name de toutes les dataframes
+
+
 DESCS2.to_csv("data/DESCS2.csv")
 DESC2.to_csv("data/DESC2.csv")
 DESD2.to_csv("data/DESD2.csv")
 DESFN2.to_csv("data/DESFN2.csv")
 DESS2.to_csv("data/DESS2.csv")
-#
-# DESD.iloc[:10,:].to_csv("data/DESD_head.csv")
+
