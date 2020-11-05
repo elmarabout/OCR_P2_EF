@@ -1,4 +1,6 @@
 import pandas as pd
+import seaborn as sns
+
 
 
 DESC = pd.read_csv("data/DESC2.csv")
@@ -32,4 +34,21 @@ print(without_region)
 for elt in without_region:
     DESD_merge.drop(DESD_merge[DESD_merge['Country Name'] == str(elt)].index, inplace=True)
 
-print("after :", DESD_merge.shape)
+print("after :\n", DESD_merge.shape,"\n",DESD.columns)
+
+### on va ajouter l'indicator code à la dataframe
+
+# df_data_POP_1524_compare = DESD_merge[DESD_merge['Indicator Code'] == "SP.POP.1524.TO.UN"]
+
+# df_data_POP_1524_compare = df_data_POP_1524_compare.drop(['Indicator Name', 'Country Code', 'Indicator Code'], axis=1)
+# df_data_POP_1524_compare = df_data_POP_1524_compare.groupby('Region').mean().reset_index()
+
+# df_data_POP_1524_compare_melt = df_data_POP_1524_compare.melt(
+#     id_vars=['Region'],
+#     value_vars=['2015'], var_name='Year', value_name='Value')
+# print(df_data_POP_1524_compare_melt)
+# df_data_POP_1524_compare_melt = df_data_POP_1524_compare_melt.drop(['Year'], axis=1)
+# print(df_data_POP_1524_compare_melt)
+
+# sns.catplot(x='Region', kind="bar", data=df_data_POP_1524_compare_melt, orient="v")
+
